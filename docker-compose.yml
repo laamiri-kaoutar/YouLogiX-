@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  # -----------------------------
+  # The FastAPI Application
+  # -----------------------------
+  web:
+    build: .
+    container_name: youlogix_backend
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    volumes:
+      - .:/app  # Maps your folder to the container (Live Updates)
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://youlogix_user:secret123@db:5432/youlogix_db
+    depends_on:
+      - db
+
+  # -----------------------------
+  # The PostgreSQL Database
+  # -----------------------------
+  db:
+    image: postgres:15-alpine
+    container_name: youlogix_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=youlogix_user
+      - POSTGRES_PASSWORD=secret123
+      - POSTGRES_DB=youlogix_db
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres_data:
