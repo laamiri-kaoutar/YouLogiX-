@@ -1,0 +1,30 @@
+# Python 
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environments (if you create one locally)
+venv/
+.venv/
+env/
+
+# Environment Variables (CRITICAL: Never commit secrets)
+.env
+.env.local
+
+# IDE Settings (VS Code, Pycharm)
+.vscode/
+.idea/
+
+# Testing & Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Docker (if you have local logs or data mapped locally)
+*.log
+postgres_data/
+
+# OS generated files
+.DS_Store
+Thumbs.db
