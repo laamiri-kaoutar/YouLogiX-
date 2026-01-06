@@ -1,4 +1,5 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String , ForeignKey
+from sqlalchemy.orm import relationship
 from app.core.database import Base
 
 class ClientExpediteur(Base):
@@ -23,11 +24,11 @@ class Destinataire(Base):
 
 class Livreur(Base):
     __tablename__ = "livreurs"
-
     id = Column(Integer, primary_key=True, index=True)
     nom = Column(String, nullable=False)
     prenom = Column(String, nullable=False)
     telephone = Column(String, nullable=False)
     vehicule = Column(String, nullable=True) # e.g., "Moto", "Camion"
     # We will link the Zone later to avoid circular dependencies
-    zone_assignee_id = Column(Integer, nullable=True)
+    zone_id = Column(Integer, ForeignKey("zones.id"))
+    zone = relationship("Zone", back_populates="users")
