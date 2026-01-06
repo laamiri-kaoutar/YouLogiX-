@@ -3,14 +3,12 @@ from sqlalchemy import Column, Integer, String, Float, ForeignKey, DateTime, Enu
 from sqlalchemy.orm import relationship
 from app.core.database import Base
 import enum
-
-# Define Status Enum for consistency
 class StatutColis(str, enum.Enum):
-    CREE = "cree"
-    COLLECTE = "collecte"
-    EN_STOCK = "en_stock"
-    EN_TRANSIT = "en_transit"
-    LIVRE = "livre"
+    EN_ATTENTE = "en_attente"        
+    EN_COURS = "en_cours"            
+    LIVRE = "livre"                
+    ANNULE = "annule" 
+
 
 class Zone(Base):
     __tablename__ = "zones"
@@ -25,7 +23,7 @@ class Colis(Base):
     description = Column(String, nullable=True)
     poids = Column(Float, nullable=False)
     ville_destination = Column(String, nullable=False)
-    statut = Column(String, default=StatutColis.CREE) 
+    statut = Column(String, default=StatutColis.EN_ATTENTE)
     
     # Foreign Keys (Relationships)
     id_client = Column(Integer, ForeignKey("clients_expediteurs.id"), nullable=False)
