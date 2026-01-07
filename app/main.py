@@ -1,8 +1,8 @@
-# from  fastapi import APIRouter ,  Depends
-# from app.schemas.zone_schemas import ZoneCreate
-# from app.controllers import ZoneController
-# router = APIRouter(prefix="/users/zones", tags=["Zones"])
-# @router.post("")
-# def create_Zone( zone : ZoneCreate) :
-#     zone = ZoneController().create(zone)
-#     return zone
+from fastapi import APIRouter ,FastAPI
+from .api.v1 import router
+app = FastAPI( 
+    title="YouLogiX Zones API",
+    description="Zones Management",
+    version="1.0.0"
+)
+app.include_router(router.router)
