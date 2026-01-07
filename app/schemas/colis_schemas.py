@@ -1,5 +1,6 @@
 from pydantic import BaseModel, ConfigDict
 from typing import Optional
+from app.models.colis_models import StatutColis
 
 # 1. Base Schema (Shared fields)
 class ColisBase(BaseModel):
@@ -24,3 +25,7 @@ class ColisResponse(ColisBase):
     
     model_config = ConfigDict(from_attributes=True)
 
+class ColisUpdateStatus(BaseModel):
+    # id : int
+    statut : StatutColis
+    id_livreur : Optional[int] = None
