@@ -1,14 +1,10 @@
 from fastapi import FastAPI, APIRouter, HTTPException, status
 from app.schemas.zone_schemas import ZoneCreate , ZoneUpdate , ZoneResponse , ZoneSearchName , ZoneSearchCodePastal
 from app.controllers.ZoneController import ZoneController
+from ..router import get_apirouter
 
-app = FastAPI(
-    title="YouLogiX Zones API",
-    description="Zones Management",
-    version="1.0.0"
-)
 
-router = APIRouter(prefix="/users/zones", tags=["Zones"])
+router = get_apirouter()
 @router.post("/", status_code=status.HTTP_201_CREATED)
 def create_zone(zone_data: ZoneCreate):
     created_zone = ZoneController().create(zone_data)
@@ -23,7 +19,7 @@ def getall() :
 @router.delete("/delete")
 def delete(zone : ZoneResponse) :
     zone = ZoneController().delete(zone)
-app.include_router(router)
+
 @router.post("/search_name")
 def SearchByName(zoneSearchname : ZoneSearchName  ) :
     zone = ZoneController().find_by_name(zoneSearchname)
@@ -32,8 +28,5 @@ def SearchByName(zoneSearchname : ZoneSearchName  ) :
 def SearchByCOdePostal(zonecodepostal :ZoneSearchCodePastal) :
     zone = ZoneController().find_by_CodePostal(zonecodepostal)
     return zone
-app.include_router(router)
-@app.get("/")
-def root():
-    return {"message": "Zones API is running"}
+
 
