@@ -20,6 +20,7 @@ def getall() :
 def delete(zone : ZoneResponse) :
     zone = ZoneController().delete(zone)
 
+
 @router.post("/search_name")
 def SearchByName(zoneSearchname : ZoneSearchName  ) :
     zone = ZoneController().find_by_name(zoneSearchname)
