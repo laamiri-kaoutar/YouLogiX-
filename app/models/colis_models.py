@@ -19,7 +19,6 @@ class Zone(Base):
 
 class Colis(Base):
     __tablename__ = "colis"
-
     id = Column(Integer, primary_key=True, index=True)
     description = Column(String, nullable=True)
     poids = Column(Float, nullable=False)
