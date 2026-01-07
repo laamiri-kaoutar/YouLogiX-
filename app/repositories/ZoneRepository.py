@@ -18,9 +18,10 @@ class ZoneRepository() :
     def find_By_Id(self , Zone_id : int) -> Zone :
         # return "ascascas"
         return self.db.query(Zone).filter(Zone.id == Zone_id).first()
-        
-    def find_By_name(self , Zone_name: str) -> Zone :
+    def find_By_name(self , Zone_name: str) :
         return self.db.query(Zone).filter(Zone.name == Zone_name).first()
+    def find_By_codepostal(self, zone: Zone)  :
+        return self.db.query(Zone).filter(Zone.code_postal == zone.code_postal).first()
     def update(self , zone : ZoneUpdate) ->Zone : 
         zone_obj = self.db.get(Zone, zone.id)
         if not zone_obj:
@@ -36,6 +37,7 @@ class ZoneRepository() :
         self.db.commit()
     def getall(self) :
         return self.db.execute(select(Zone)).scalars().all()
+    
 
         
         

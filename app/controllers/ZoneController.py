@@ -1,7 +1,7 @@
 from ..services.ZoneService import ZoneService
 from ..services.UserService import UserService
 from ..models.Zone import Zone
-from ..schemas.zone_schemas import ZoneCreate , ZoneUpdate , ZoneResponse
+from ..schemas.zone_schemas import ZoneCreate , ZoneUpdate , ZoneResponse , ZoneSearchCodePastal , ZoneSearchName
 class ZoneController() :
     def __init__(self):
         self.ZoneService = ZoneService()
@@ -17,6 +17,10 @@ class ZoneController() :
         return self.ZoneService.getall()
     def delete(self , zone_schema : ZoneResponse) :
         return self.ZoneService.delete(zone_schema)
-
-        
+    def find_by_name(self ,  zone_name:ZoneSearchName  ) : 
+        zone = Zone(**zone_name.model_dump(mode="orm"))
+        return self.ZoneService.find_by_name(zone)
+    def find_by_CodePostal(self,ZoneCodePostal:ZoneSearchCodePastal) :
+        zone = Zone(**ZoneCodePostal.model_dump(mode="orm"))
+        return self.ZoneService.find_by_codepostal(zone)
         

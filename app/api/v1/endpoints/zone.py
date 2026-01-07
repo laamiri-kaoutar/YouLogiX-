@@ -1,5 +1,5 @@
 from fastapi import FastAPI, APIRouter, HTTPException, status
-from app.schemas.zone_schemas import ZoneCreate , ZoneUpdate , ZoneResponse
+from app.schemas.zone_schemas import ZoneCreate , ZoneUpdate , ZoneResponse , ZoneSearchName , ZoneSearchCodePastal
 from app.controllers.ZoneController import ZoneController
 
 app = FastAPI(
@@ -23,6 +23,15 @@ def getall() :
 @router.delete("/delete")
 def delete(zone : ZoneResponse) :
     zone = ZoneController().delete(zone)
+app.include_router(router)
+@router.post("/search_name")
+def SearchByName(zoneSearchname : ZoneSearchName  ) :
+    zone = ZoneController().find_by_name(zoneSearchname)
+    return zone
+@router.post("/searchcodepostal")
+def SearchByCOdePostal(zonecodepostal :ZoneSearchCodePastal) :
+    zone = ZoneController().find_by_CodePostal(zonecodepostal)
+    return zone
 app.include_router(router)
 @app.get("/")
 def root():

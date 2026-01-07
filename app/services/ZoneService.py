@@ -23,3 +23,11 @@ class ZoneService() :
         if len(zones) == 0 :
             return {"message " : "no data exists" }
         return zones
+    def find_by_name(self , zone: Zone)   :
+        zone = self.zonerepository.find_By_name(zone.name)
+        return zone
+    def find_by_codepostal(self, zone : Zone) : 
+        zone = self.zonerepository.find_By_codepostal(zone)
+        if zone : 
+            return zone
+        return {"message " : "there no code postal with this number"}
