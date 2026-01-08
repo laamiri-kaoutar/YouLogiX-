@@ -15,6 +15,8 @@ class LivreurRepository():
         return self.create(livreur)
     def find_By_Id(self , livreur_id : int) :
         return self.db.query(Livreur).filter(Livreur.id == livreur_id).first()
+    def delete(self  ) :
+        pass 
     
    
          

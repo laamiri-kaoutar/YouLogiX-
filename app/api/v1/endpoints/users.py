@@ -7,10 +7,10 @@ def create_Livreur(livreur: LivreurCreate):
     created_zone = LivreurController().create(livreur)
     return created_zone
 @router.post("/updatezone", status_code=status.HTTP_201_CREATED)
-def create_Livreur(livreur: LivreurAddZone ):
+def add_zone_to_Livreur(livreur: LivreurAddZone ):
     created_zone = LivreurController().add_zone_to_Livreur(livreur)
     return created_zone
 @router.get("/livreur", status_code=status.HTTP_201_CREATED)
-def create_Livreur( ):
+def get_livreur_with_zone( ):
     created_zone = LivreurController().get_livreur()
     return created_zone
