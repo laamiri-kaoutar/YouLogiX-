@@ -1,10 +1,9 @@
 from fastapi import FastAPI, APIRouter, HTTPException, status
 from app.schemas.zone_schemas import ZoneCreate , ZoneUpdate , ZoneResponse , ZoneSearchName , ZoneSearchCodePastal
 from app.controllers.ZoneController import ZoneController
-from ..router import get_apirouter
+router = APIRouter()
 
 
-router = get_apirouter()
 @router.post("/", status_code=status.HTTP_201_CREATED)
 def create_zone(zone_data: ZoneCreate):
     created_zone = ZoneController().create(zone_data)
@@ -21,7 +20,7 @@ def delete(zone : ZoneResponse) :
     zone = ZoneController().delete(zone)
 
 @router.post("/search_name")
-def SearchByName(zoneSearchname : ZoneSearchName  ) :
+def SearchByName(zoneSearchname    ) :
     zone = ZoneController().find_by_name(zoneSearchname)
     return zone
 @router.post("/searchcodepostal")

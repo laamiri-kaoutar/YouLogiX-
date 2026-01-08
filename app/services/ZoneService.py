@@ -1,5 +1,5 @@
 from ..repositories.ZoneRepository import ZoneRepository
-from ..models import Zone
+from ..models.colis_models import Zone
 from ..schemas.zone_schemas import ZoneCreate , ZoneUpdate ,ZoneResponse
 class ZoneService() :
     zonerepository : ZoneRepository

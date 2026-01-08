@@ -1,4 +1,4 @@
-from ..models.Zone  import Zone
+from ..models.colis_models  import Zone
 from sqlalchemy.orm import Session
 from ..core.database import get_db
 from sqlalchemy import select
@@ -9,7 +9,7 @@ class ZoneRepository() :
     def __init__(self):
         self.db_generator = get_db()
         self.db = next(self.db_generator)
-        self.zone = Zone()
+        # self.zone = Zone()
     def create(self , zone : Zone ) :
         self.db.add(zone)
         self.db.commit()
@@ -18,7 +18,7 @@ class ZoneRepository() :
     def find_By_Id(self , Zone_id : int) -> Zone :
         # return "ascascas"
         return self.db.query(Zone).filter(Zone.id == Zone_id).first()
-    def find_By_name(self , Zone_name: str) :
+    def find_By_name(self , Zone_name) :
         return self.db.query(Zone).filter(Zone.name == Zone_name).first()
     def find_By_codepostal(self, zone: Zone)  :
         return self.db.query(Zone).filter(Zone.code_postal == zone.code_postal).first()

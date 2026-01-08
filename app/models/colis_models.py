@@ -9,28 +9,39 @@ class StatutColis(str, enum.Enum):
     LIVRE = "livre"                
     ANNULE = "annule" 
 
-
+from sqlalchemy import Column, Integer, String
+from app.core.database import Base
+from sqlalchemy.orm import relationship
+from .user_models import Livreur
 class Zone(Base):
     __tablename__ = "zones"
-
+    __table_args__ = {'extend_existing': True}
     id = Column(Integer, primary_key=True, index=True)
-    nom = Column(String, unique=True, nullable=False) 
-    code_postal = Column(String, nullable=False)
-
+    name = Column(String, nullable=False)
+    code_postal = Column(String, nullable=False, unique=True, index=True)
+    livreurs = relationship("Livreur", back_populates="zone")
+    colis_list = relationship("Colis", back_populates="zone")
 class Colis(Base):
     __tablename__ = "colis"
+    __table_args__ = {'extend_existing': True}
+    
     id = Column(Integer, primary_key=True, index=True)
     description = Column(String, nullable=True)
     poids = Column(Float, nullable=False)
     ville_destination = Column(String, nullable=False)
     statut = Column(String, default=StatutColis.EN_ATTENTE)
     
-    # Foreign Keys (Relationships)
+    # Foreign Keys
     id_client = Column(Integer, ForeignKey("clients_expediteurs.id"), nullable=False)
     id_destinataire = Column(Integer, ForeignKey("destinataires.id"), nullable=False)
     id_zone = Column(Integer, ForeignKey("zones.id"), nullable=False)
-    id_livreur = Column(Integer, ForeignKey("livreurs.id"), nullable=True) # Nullable because it might not be assigned yet
-
+    id_livreur = Column(Integer, ForeignKey("livreurs.id"), nullable=True)
+    
+    # Relationships - use string references
+    client = relationship("ClientExpediteur", back_populates="colis_list")
+    destinataire = relationship("Destinataire", back_populates="colis_list")
+    zone = relationship("Zone", back_populates="colis_list")
+    livreur = relationship("Livreur", back_populates="colis_list") # Nullable because it might not be assigned yet
     # ORM Relationships (Optional but helpful for code navigation)
     # zone = relationship("Zone")
 

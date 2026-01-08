@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from app.core.config import settings
 from app.core.database import engine, Base
-from app.api.v1.router import api_router
+from app.api.v1.router import router
 
 # --- IMPORT MODELS HERE TO REGISTER THEM WITH SQLALCHEMY ---
 from app.models import user_models, colis_models
@@ -14,7 +14,7 @@ app = FastAPI(
     openapi_url=f"{settings.API_V1_STR}/openapi.json"
 )
 
-app.include_router(api_router , prefix=settings.API_V1_STR)
+app.include_router(router , prefix=settings.API_V1_STR)
 
 @app.get("/")
 def root():
