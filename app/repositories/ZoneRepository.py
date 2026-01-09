@@ -1,4 +1,4 @@
-from ..models.Zone  import Zone
+from ..models.colis_models  import Zone
 from sqlalchemy.orm import Session
 from ..core.database import get_db
 from sqlalchemy import select

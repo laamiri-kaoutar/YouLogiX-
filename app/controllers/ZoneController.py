@@ -1,6 +1,6 @@
 from ..services.ZoneService import ZoneService
 from ..services.UserService import UserService
-from ..models.Zone import Zone
+from ..models.colis_models import Zone
 from ..schemas.zone_schemas import ZoneCreate , ZoneUpdate , ZoneResponse , ZoneSearchCodePastal , ZoneSearchName
 class ZoneController() :
     def __init__(self):

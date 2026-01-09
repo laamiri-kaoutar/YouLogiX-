@@ -12,3 +12,8 @@ class HistoriqueRepository:
         self.db.commit()
         self.db.refresh(history)
         return history
+    def delete_by_colis_id(self, id_colis: int):
+        self.db.query(HistoriqueStatut).filter(
+            HistoriqueStatut.id_colis == id_colis
+        ).delete()
+        self.db.commit()

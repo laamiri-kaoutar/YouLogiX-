@@ -1,7 +1,7 @@
 from app.services.colis_service import ColisService
 from app.schemas.colis_schemas import ColisCreate
 from app.models.colis_models import Colis
-from app.schemas.colis_schemas import ColisUpdateStatus
+from app.schemas.colis_schemas import ColisUpdateStatus , ColisFilter
 
 
 class ColisController:
@@ -29,5 +29,19 @@ class ColisController:
     def get_by_id(self , id: int):
         return self.service.get_colis_by_id(id)
     
-    def get_all(self):
-        return self.service.get_all_colis()
+
+    def get_all(self, filters: ColisFilter):
+        return self.service.get_all_colis(filters)
+
+
+    def delete(self, id: int):
+        return self.service.delete_colis(id)
+
+    def get_for_client(self, id_client: int):
+        return self.service.get_by_client(id_client)
+
+    def get_for_livreur(self, id_livreur: int):
+        return self.service.get_by_livreur(id_livreur)
+
+    def get_for_destinataire(self, id_destinataire: int):
+        return self.service.get_by_destinataire(id_destinataire)

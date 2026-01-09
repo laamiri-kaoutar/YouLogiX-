@@ -1,12 +1,16 @@
-from fastapi import FastAPI, APIRouter, HTTPException, status
+from fastapi import FastAPI, APIRouter, HTTPException, status , Depends
 from app.schemas.zone_schemas import ZoneCreate , ZoneUpdate , ZoneResponse , ZoneSearchName , ZoneSearchCodePastal
 from app.controllers.ZoneController import ZoneController
-from ..router import get_apirouter
+# from ..router import get_apirouter
+
+from app.api.deps import get_current_active_livreur  , get_current_active_admin
+from app.models.user_models import User
 
 
-router = get_apirouter()
+router = APIRouter()
+
 @router.post("/", status_code=status.HTTP_201_CREATED)
-def create_zone(zone_data: ZoneCreate):
+def create_zone(zone_data: ZoneCreate, current_user: User = Depends(get_current_active_admin) ):
     created_zone = ZoneController().create(zone_data)
     return created_zone
 @router.put("/update")

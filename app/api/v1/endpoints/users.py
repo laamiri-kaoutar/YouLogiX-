@@ -1,0 +1,34 @@
+from fastapi import APIRouter, HTTPException, status , Depends
+from app.controllers.user_controller import UserController
+from app.schemas.user_schemas import UserCreate, UserResponse
+from app.api.deps import get_current_user , get_current_active_livreur 
+from app.models.user_models import User
+
+router = APIRouter()
+
+@router.get('current_user' , response_model=UserResponse )
+def get_authenticated_user(current_user: User = Depends(get_current_user) ):
+    # user = get_current_user()
+    return current_user
+    
+
+@router.post("/", response_model=UserResponse, status_code=status.HTTP_201_CREATED)
+def create_user(user: UserCreate):
+    controller = UserController()
+    new_user = controller.create(user)
+    
+    if not new_user:
+        raise HTTPException(
+            status_code=400, 
+            detail="Email already registered"
+        )
+        
+    return new_user
+
+@router.get("/{id}", response_model=UserResponse)
+def read_user(id: int):
+    controller = UserController()
+    user = controller.get_by_id(id)
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    return user

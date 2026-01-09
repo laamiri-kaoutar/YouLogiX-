@@ -10,7 +10,7 @@ def seed_database():
     print("🌱 Seeding database (Auto-IDs)...")
 
     # 1. Create Objects WITHOUT specifying 'id'
-    zone = colis_models.Zone(nom="Centre Ville", code_postal="10000")
+    zone = colis_models.Zone(name="Centre Ville", code_postal="10000")
     
     client = user_models.ClientExpediteur(
         nom="Dupont",
