@@ -20,7 +20,7 @@ def delete(zone : ZoneResponse) :
     zone = ZoneController().delete(zone)
 
 @router.post("/search_name")
-def SearchByName(zoneSearchname    ) :
+def SearchByName(zoneSearchname) :
     zone = ZoneController().find_by_name(zoneSearchname)
     return zone
 @router.post("/searchcodepostal")

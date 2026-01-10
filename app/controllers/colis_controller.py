@@ -20,12 +20,8 @@ class ColisController:
 
         new_status = update_data.statut
         id_livreur = update_data.id_livreur
-
-
         updated_colis = self.service.update_status( id , new_status , id_livreur)
-
         return updated_colis
-    
     def get_by_id(self , id: int):
         return self.service.get_colis_by_id(id)
     

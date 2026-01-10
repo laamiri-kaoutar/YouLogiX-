@@ -11,7 +11,7 @@ class ColisBase(BaseModel):
     # The creator provides these IDs
     id_client: int
     id_destinataire: int
-    id_zone: int
+    zone_name: str
 
 # 2. Input Schema (What the Client sends)
 class ColisCreate(ColisBase):

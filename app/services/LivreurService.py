@@ -2,6 +2,9 @@ from ..repositories.LivreurRepository import LivreurRepository
 from ..repositories.ZoneRepository import ZoneRepository
 from ..schemas.livreur_schemas import LivreurCreate , LivreurAddZone
 from ..models.user_models import Livreur
+import smtplib
+from email.message import EmailMessage
+import uuid
 class LivreurService() :
     def __init__(self):
         self.livreur_repository = LivreurRepository()
@@ -16,5 +19,29 @@ class LivreurService() :
         return self.livreur_repository.update(livreur)
     def get_livreur(self) : 
         Livreur = self.livreur_repository.find_By_Id(1)
-        return Livreur ,  Livreur.zone 
-        
+        return Livreur 
+    def send_email_notification(self) :
+        email_address="kamalyouness277@gmail.com"
+        email_password="jdwhwvrmkkfcratl"
+        msg = EmailMessage()
+        msg['subject'] = "colis validation"
+        msg['from'] =  email_address
+        msg['to'] = email_address
+        token = str(uuid.uuid4())
+        link = f"http://localhost:8000/api/v1/users/emailverification?token={email_address}"
+        msg.set_content(
+            f"""
+            name : younes
+            link : validate your colis : {link}
+            key validation : {token}
+            """
+        )
+        with smtplib.SMTP("smtp.gmail.com", 587) as stp:
+            stp.starttls()
+            stp.login(email_address, email_password)
+            stp.send_message(msg)
+        return "done"
+    def getall_Colis(self) :
+        livreur = self.get_livreur()
+        return livreur.colis_list
+    
