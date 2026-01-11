@@ -6,6 +6,7 @@ from app.core.security import get_password_hash
 class UserService:
     def __init__(self):
         self.repo = UserRepository()
+        self.livreurservice = LivreurService()
 
     def create_user(self, user_data: UserCreate):
         logger.info(f"Attempting to create new user: {user_data.email}") # <--- Log entry
@@ -38,3 +39,4 @@ class UserService:
              logger.warning(f"User lookup failed: ID {id} not found")
              
         return user
+    def updateprofile(self , )

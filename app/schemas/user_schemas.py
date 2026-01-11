@@ -20,6 +20,7 @@ class UserUpdate(BaseModel):
     email: Optional[EmailStr] = None
     telephone: Optional[str] = None
     password: Optional[str] = None 
+class LivreurUpdate() :
 
 class UserResponse(UserBase):
     id: int

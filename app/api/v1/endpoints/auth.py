@@ -1,11 +1,14 @@
-from fastapi import APIRouter, HTTPException, status, Depends
+from fastapi import APIRouter, HTTPException, status, Depends , Request
 from app.services.auth_service import AuthService
 from app.schemas.auth_schemas import LoginRequest, Token
 from fastapi.security import OAuth2PasswordRequestForm
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from fastapi.responses import JSONResponse
 
 
 router = APIRouter()
 
+    
 @router.post("/login", response_model=Token)
 def login(login_data: LoginRequest):
     service = AuthService()
