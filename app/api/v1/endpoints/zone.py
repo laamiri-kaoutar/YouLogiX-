@@ -1,11 +1,13 @@
 from fastapi import FastAPI, APIRouter, HTTPException, status
 from app.schemas.zone_schemas import ZoneCreate , ZoneUpdate , ZoneResponse , ZoneSearchName , ZoneSearchCodePastal
 from app.controllers.ZoneController import ZoneController
+from app.core.logging import logger
 router = APIRouter()
 
 
 @router.post("/", status_code=status.HTTP_201_CREATED)
 def create_zone(zone_data: ZoneCreate):
+    logger.info("Creating a zone")
     created_zone = ZoneController().create(zone_data)
     return created_zone
 @router.put("/update")

@@ -2,15 +2,14 @@ from fastapi import APIRouter, HTTPException
 from app.schemas.colis_schemas import ColisCreate, ColisResponse , ColisUpdateStatus
 from app.controllers.colis_controller import ColisController
 from typing import List
-
+from app.core.logging import logger
 router = APIRouter()
 
 @router.post("/", response_model=ColisResponse)
 def create_colis(colis: ColisCreate):
-
+   
     controller = ColisController()
     result = controller.create(colis)
-    
     return result
 
 @router.patch('/{id}/status' , response_model= ColisResponse)
