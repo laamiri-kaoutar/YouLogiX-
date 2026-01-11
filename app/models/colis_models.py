@@ -24,8 +24,7 @@ class Zone(Base):
 
 
 class Colis(Base):
-    __tablename__ = "colis"
-
+    __tablename__ = "colis"    
     id = Column(Integer, primary_key=True, index=True)
     
     description = Column(Text, nullable=True) 
@@ -41,7 +40,6 @@ class Colis(Base):
     destinataire_email = Column(String, nullable=True)      
     
     statut = Column(String, default=StatutColis.EN_ATTENTE)
-    
     date_creation = Column(DateTime(timezone=True), server_default=func.now())
     date_livraison = Column(DateTime(timezone=True), nullable=True) # Set this when status becomes LIVRE
     
@@ -84,7 +82,19 @@ class Colis(Base):
 #     # livreur = relationship("User", foreign_keys=[id_livreur])
 #     historiques = relationship("HistoriqueStatut", back_populates="colis")
 
-
+    # # Foreign Keys
+    # id_client = Column(Integer, ForeignKey("clients_expediteurs.id"), nullable=False)
+    # id_destinataire = Column(Integer, ForeignKey("destinataires.id"), nullable=False)
+    # id_zone = Column(Integer, ForeignKey("zones.id"), nullable=False)
+    # id_livreur = Column(Integer, ForeignKey("livreurs.id"), nullable=True)
+    
+    # # Relationships - use string references
+    # client = relationship("ClientExpediteur", back_populates="colis_list")
+    # destinataire = relationship("Destinataire", back_populates="colis_list")
+    # zone = relationship("Zone", back_populates="colis_list")
+    # livreur = relationship("Livreur", back_populates="colis_list") # Nullable because it might not be assigned yet
+    # # ORM Relationships (Optional but helpful for code navigation)
+    # # zone = relationship("Zone")
 class HistoriqueStatut(Base):
     __tablename__ = "historique_statut"
 

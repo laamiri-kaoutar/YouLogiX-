@@ -16,9 +16,11 @@ class User(Base):
     prenom = Column(String, nullable=False)
     email = Column(String, unique=True, index=True, nullable=False)
     telephone = Column(String, nullable=False)
+
     role = Column(String, default=Role.CLIENT)
     
     hashed_password = Column(String, nullable=False)
+    
 
     livreur_profile = relationship("Livreur", back_populates="user", uselist=False)
 
@@ -34,3 +36,4 @@ class Livreur(Base):
     
     zone = relationship("Zone", back_populates="users")
     user = relationship("User", back_populates="livreur_profile")
+

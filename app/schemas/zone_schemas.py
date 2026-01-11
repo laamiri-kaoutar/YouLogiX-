@@ -1,11 +1,9 @@
 from pydantic import BaseModel, ConfigDict
 from typing import Optional
-
 # Common fields
 class ZoneBase(BaseModel):
     name: str
     code_postal: str
-
 # Data required to CREATE
 class ZoneCreate(ZoneBase):
     pass

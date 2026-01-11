@@ -1,4 +1,5 @@
 import logging
+# <<<<<<< HEAD
 import sys
 from loguru import logger
 
@@ -39,3 +40,16 @@ def configure_logging():
     # This specifically targets FastAPI/Uvicorn loggers
     logging.getLogger("uvicorn.access").handlers = [InterceptHandler()]
     logging.getLogger("uvicorn.error").handlers = [InterceptHandler()]
+
+# import sys 
+
+# logger = logging.getLogger()
+# formatter  = logging.Formatter(fmt="%(asctime)s - %(levelname)s - %(message)s" ) 
+# stream_handler  = logging.StreamHandler(sys.stdout)
+# file_handler = logging.FileHandler('app.log')
+# stream_handler.setFormatter(formatter)
+# file_handler.setFormatter(formatter)
+# logger.handlers = [stream_handler , file_handler]
+
+# logger.setLevel(logging.INFO)
+# >>>>>>> MVC

@@ -11,14 +11,15 @@ from app.core.config import settings  # Import your settings
 # Public routes that don't need authentication
 PUBLIC_ROUTES = [
     "/",
-    "/login",
+    "/api/v1/users/login",
     "/register",
     "/docs",
     "/openapi.json",
     "/redoc",
     "/api/v1/auth/login", 
     "/api/v1/zones/all",  
-    "/api/v1/users/register"
+    "/api/v1/users/register",
+    "/api/v1/auth/login/access-token"
 ]
 
 

@@ -20,12 +20,8 @@ class ColisController:
 
         new_status = update_data.statut
         id_livreur = update_data.id_livreur
-
-
         updated_colis = self.service.update_status( id , new_status , id_livreur)
-
         return updated_colis
-    
     def get_by_id(self , id: int):
         return self.service.get_colis_by_id(id)
     
@@ -45,3 +41,5 @@ class ColisController:
 
     def get_for_destinataire(self, id_destinataire: int):
         return self.service.get_by_destinataire(id_destinataire)
+    def get_colis_without_livreur(self) :
+        self.service.get_colis_without_livreur()

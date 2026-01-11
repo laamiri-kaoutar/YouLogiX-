@@ -8,6 +8,7 @@ class ZoneController() :
         self.userService = UserService()
     def create(self , zone : ZoneCreate )->Zone :
         zone = Zone(**zone.model_dump(mode="orm"))
+        # return zone
         zone = self.ZoneService.create(zone)
         return zone
     def update (self, zone:ZoneUpdate) :

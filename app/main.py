@@ -24,6 +24,8 @@ app.middleware("http")(authentication_middleware)
 app.include_router(api_router , prefix=settings.API_V1_STR)
 logger.info(f"API Router included with prefix: {settings.API_V1_STR}")
 
+
+
 @app.get("/")
 def root():
     logger.info("Root endpoint (Health Check) accessed") 

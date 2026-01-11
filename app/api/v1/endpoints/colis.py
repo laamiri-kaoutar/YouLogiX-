@@ -6,14 +6,14 @@ from app.api.deps import get_current_user , get_current_active_livreur
 from app.models.user_models import User , Role
 
 
+
 router = APIRouter()
 
 @router.post("/", response_model=ColisSimpleResponse)
 def create_colis(colis: ColisCreate):
-
+   
     controller = ColisController()
     result = controller.create(colis)
-    
     return result
 
 # @router.post("/", response_model=ColisSimpleResponse)

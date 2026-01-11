@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from app.models.colis_models import Colis
+from app.models.colis_models import Colis , Zone
 from app.core.database import get_db
 from sqlalchemy.orm import joinedload, selectinload 
 from app.schemas.colis_schemas import ColisFilter 
@@ -58,3 +58,9 @@ class ColisRepository:
             self.db.commit()
             return True
         return False
+    def get_colis_without_livreur(self):
+        return (
+        self.db.query(Colis)
+        .filter(Colis.id_livreur.is_(None))
+        .all()
+    )

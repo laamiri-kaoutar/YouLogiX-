@@ -78,3 +78,6 @@ class ColisService:
         logger.debug(f"Fetching colis for livreur ID: {livreur_id}")
         filters = ColisFilter(id_livreur=livreur_id)
         return self.repository.get_all(filters)
+    def get_colis_without_livreur(self) :
+        return self.repository.get_colis_without_livreur() 
+

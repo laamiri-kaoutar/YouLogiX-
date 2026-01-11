@@ -1,6 +1,7 @@
 from fastapi import FastAPI, APIRouter, HTTPException, status , Depends , Request 
 from app.schemas.zone_schemas import ZoneCreate , ZoneUpdate , ZoneResponse , ZoneSearchName , ZoneSearchCodePastal
 from app.controllers.ZoneController import ZoneController
+# <<<<<<< HEAD
 # from ..router import get_apirouter
 
 from app.api.deps import get_current_active_livreur  , get_current_active_admin
@@ -11,6 +12,15 @@ router = APIRouter()
 
 @router.post("/", status_code=status.HTTP_201_CREATED)
 def create_zone(zone_data: ZoneCreate, current_user: User = Depends(get_current_active_admin) ):
+# =======
+# from app.core.logging import logger
+# router = APIRouter()
+
+
+# @router.post("/", status_code=status.HTTP_201_CREATED)
+# def create_zone(zone_data: ZoneCreate):
+#     logger.info("Creating a zone")
+# >>>>>>> MVC
     created_zone = ZoneController().create(zone_data)
     return created_zone
 @router.put("/update" )
@@ -26,7 +36,7 @@ def delete(zone : ZoneResponse , current_user: User = Depends(get_current_active
 
 
 @router.post("/search_name")
-def SearchByName(zoneSearchname : ZoneSearchName  ) :
+def SearchByName(zoneSearchname) :
     zone = ZoneController().find_by_name(zoneSearchname)
     return zone
 @router.post("/searchcodepostal")

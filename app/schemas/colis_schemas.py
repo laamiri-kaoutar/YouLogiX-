@@ -26,7 +26,7 @@ class ColisBase(BaseModel):
     adresse_depart: str
     adresse_destination: str
     ville_destination: str
-    
+
     destinataire_nom: str
     destinataire_telephone: str
     destinataire_email: Optional[EmailStr] = None
@@ -35,6 +35,7 @@ class ColisBase(BaseModel):
     
     id_client: Optional[int] = None 
     id_livreur: Optional[int] = None
+
 
 
 

@@ -20,9 +20,11 @@ class UserUpdate(BaseModel):
     email: Optional[EmailStr] = None
     telephone: Optional[str] = None
     password: Optional[str] = None 
-class LivreurUpdate() :
+
 
 class UserResponse(UserBase):
     id: int
     
     model_config = ConfigDict(from_attributes=True)
+
+    
