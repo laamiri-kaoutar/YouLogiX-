@@ -4,14 +4,15 @@ from app.controllers.ZoneController import ZoneController
 from fastapi.responses import JSONResponse
 from jose import JWTError, jwt
 
-from app.api.deps import get_current_active_livreur, get_current_active_admin
+from app.api.deps import get_current_active_client, get_current_active_admin
 from app.models.user_models import User
-from app.core.config import settings  # Import your settings
+from app.core.config import settings
 
 # Public routes that don't need authentication
 PUBLIC_ROUTES = [
     "/",
     "/api/v1/users/login",
+    "/api/v1/users/historique_Colis" , 
     "/register",
     "/docs",
     "/openapi.json",
@@ -28,13 +29,19 @@ async def authentication_middleware(request: Request, call_next):
     if request.url.path in PUBLIC_ROUTES:
         return await call_next(request)
     
-    # Skip docs and static files
-    if (request.url.path.startswith("/docs") or request.url.path.endswith("/openapi.json")):
+    # Skip docs, openapi, and static files
+    if (request.url.path.startswith("/docs") or 
+        request.url.path.startswith("/redoc") or
+        request.url.path.startswith("/static") or
+        request.url.path.endswith("/openapi.json")):
         return await call_next(request)
+    
+    print(f"🔍 Checking auth for: {request.url.path}")
     
     # Get Authorization header
     auth_header = request.headers.get("Authorization")
-    print(auth_header)
+    print(f"Auth header: {auth_header}")
+    
     if not auth_header:
         return JSONResponse(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -54,25 +61,25 @@ async def authentication_middleware(request: Request, call_next):
     token = auth_header.split(" ")[1]
     
     try:
-        # Decode token using YOUR settings
+        # Decode token
         payload = jwt.decode(
             token, 
-            settings.SECRET_KEY,  # Your secret key from settings
-            algorithms=[settings.ALGORITHM]  # Your algorithm from settings
+            settings.SECRET_KEY,
+            algorithms=[settings.ALGORITHM]
         )
         
-        # Extract user info (based on your create_access_token method)
-        user_id = payload.get("sub")  # You use "sub" for user ID
-        role = payload.get("role")  # You include role in token
+        # Extract user info
+        user_id = payload.get("sub")
+        role = payload.get("role")
         
         if user_id is None:
             raise JWTError("Invalid token payload - missing user ID")
         
-        # Store user info in request state
+        # Store user info in request state for use in endpoints
         request.state.user_id = user_id
         request.state.role = role
         
-        print(f"✅ Middleware Auth: User ID {user_id} (Role: {role})")
+        print(f"✅ Authenticated: User ID {user_id} (Role: {role})")
         
     except jwt.ExpiredSignatureError:
         return JSONResponse(

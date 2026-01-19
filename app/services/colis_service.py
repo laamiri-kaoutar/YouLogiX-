@@ -3,11 +3,12 @@ from app.repositories.colis_repository import ColisRepository
 from app.repositories.historique_repository import HistoriqueRepository 
 from app.schemas.colis_schemas import ColisFilter
 from app.models.colis_models import Colis , HistoriqueStatut
-
+from app.services.ZoneService import ZoneService
 class ColisService:
     def __init__(self):
         self.repository = ColisRepository()
         self.history_repo = HistoriqueRepository()
+        self.zone_service = ZoneService
 
     def create_colis(self, colis: Colis) -> Colis:
         logger.info(f"Creating new colis for client ID: {colis.id_client}")
@@ -79,5 +80,8 @@ class ColisService:
         filters = ColisFilter(id_livreur=livreur_id)
         return self.repository.get_all(filters)
     def get_colis_without_livreur(self) :
-        return self.repository.get_colis_without_livreur() 
+        colis =  self.repository.get_colis_without_livreur()
+        return {"colis" : colis , "zone available livreurs" : colis[0].zone.livreur[0].user }
+
+     
 

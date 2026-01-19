@@ -54,11 +54,11 @@ def get_current_user(token: str = Depends(oauth2_scheme)) -> User:
     return user
 
 
-def get_current_active_livreur(
+def get_current_active_client(
     current_user: User = Depends(get_current_user)
 ) -> User:
     """Only allows LIVREURS or ADMINS to pass"""
-    if current_user.role not in [Role.LIVREUR, Role.ADMIN]:
+    if current_user.role != Role.CLIENT:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Not enough permissions. You must be a Livreur."
@@ -70,6 +70,16 @@ def get_current_active_admin(
 ) -> User:
     """Only allows ADMINS to pass"""
     if current_user.role != Role.ADMIN:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Not enough permissions. Admin access required."
+        )
+    return current_user
+def get_current_active_livreur(
+    current_user: User = Depends(get_current_user)
+) -> User:
+    """Only allows ADMINS to pass"""
+    if current_user.role != Role.LIVREUR:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Not enough permissions. Admin access required."

@@ -4,23 +4,17 @@ from app.controllers.ZoneController import ZoneController
 # <<<<<<< HEAD
 # from ..router import get_apirouter
 
-from app.api.deps import get_current_active_livreur  , get_current_active_admin
+from app.api.deps import get_current_active_client  , get_current_active_admin , get_current_user
 from app.models.user_models import User
 
+from app.core.logging import logger
 
 router = APIRouter()
 
 @router.post("/", status_code=status.HTTP_201_CREATED)
 def create_zone(zone_data: ZoneCreate, current_user: User = Depends(get_current_active_admin) ):
-# =======
-# from app.core.logging import logger
-# router = APIRouter()
+    logger.info("Creating a zone")
 
-
-# @router.post("/", status_code=status.HTTP_201_CREATED)
-# def create_zone(zone_data: ZoneCreate):
-#     logger.info("Creating a zone")
-# >>>>>>> MVC
     created_zone = ZoneController().create(zone_data)
     return created_zone
 @router.put("/update" )
@@ -36,11 +30,11 @@ def delete(zone : ZoneResponse , current_user: User = Depends(get_current_active
 
 
 @router.post("/search_name")
-def SearchByName(zoneSearchname) :
+def SearchByName(zoneSearchname , current_user: User = Depends(get_current_user) ) :
     zone = ZoneController().find_by_name(zoneSearchname)
     return zone
 @router.post("/searchcodepostal")
-def SearchByCOdePostal(zonecodepostal :ZoneSearchCodePastal) :
+def SearchByCOdePostal(zonecodepostal :ZoneSearchCodePastal ,  current_user: User = Depends(get_current_user)) :
     zone = ZoneController().find_by_CodePostal(zonecodepostal)
     return zone
 

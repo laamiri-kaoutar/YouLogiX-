@@ -12,7 +12,6 @@ router = APIRouter()
 @router.post("/login", response_model=Token)
 def login(login_data: LoginRequest):
     service = AuthService()
-    
     # Attempt to authenticate
     token = service.authenticate_user(login_data)
     
@@ -23,6 +22,7 @@ def login(login_data: LoginRequest):
             headers={"WWW-Authenticate": "Bearer"},
         )
         
+    
     return token
 
 # ---  SPECIFICALLY for Swagger UI (Form Data) ---
@@ -40,4 +40,5 @@ def login_for_swagger(form_data: OAuth2PasswordRequestForm = Depends()):
             detail="Incorrect email or password",
             headers={"WWW-Authenticate": "Bearer"},
         )
+    print(token)
     return token

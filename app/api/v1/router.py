@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-# <<<<<<< HEAD
+
 from app.api.v1.endpoints import colis, users  , zone  , auth
 
 

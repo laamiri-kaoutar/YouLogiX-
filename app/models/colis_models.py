@@ -20,7 +20,8 @@ class Zone(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, nullable=False)
     code_postal = Column(String, nullable=False, unique=True, index=True)
-    users = relationship("Livreur", back_populates="zone")
+    livreur = relationship("Livreur", back_populates="zone")
+    colis = relationship("Colis" , back_populates="zone" , uselist=False)
 
 
 class Colis(Base):
@@ -41,17 +42,17 @@ class Colis(Base):
     
     statut = Column(String, default=StatutColis.EN_ATTENTE)
     date_creation = Column(DateTime(timezone=True), server_default=func.now())
-    date_livraison = Column(DateTime(timezone=True), nullable=True) # Set this when status becomes LIVRE
-    
+    date_livraison = Column(DateTime(timezone=True), nullable=True) 
+
     id_client = Column(Integer, ForeignKey("users.id"), nullable=False)
-    id_livreur = Column(Integer, ForeignKey("users.id"), nullable=True) 
+    id_livreur = Column(Integer, ForeignKey("livreurs.id"), nullable=True) 
     id_zone = Column(Integer, ForeignKey("zones.id"), nullable=False)
-
-    zone = relationship("Zone")
+    # livreur = relationship("livreur" , back_populates="colis")
+    zone = relationship("Zone",back_populates="colis")
     historiques = relationship("HistoriqueStatut", back_populates="colis", cascade="all, delete-orphan")
+    user = relationship("User",back_populates="colis")
+    livreur = relationship("Livreur", back_populates="colis" )
 
-    # client = relationship("User", foreign_keys=[id_client])
-    # livreur = relationship("User", foreign_keys=[id_livreur])
 
 
 
@@ -97,12 +98,16 @@ class Colis(Base):
     # # zone = relationship("Zone")
 class HistoriqueStatut(Base):
     __tablename__ = "historique_statut"
-
     id = Column(Integer, primary_key=True, index=True)
     id_colis = Column(Integer, ForeignKey("colis.id"), nullable=False)
     ancien_statut = Column(String, nullable=True)
     nouveau_statut = Column(String, nullable=False)
-    timestamp = Column(DateTime, default=datetime.datetime.utcnow)
-    # id_livreur = Column(Integer, ForeignKey("livreurs.id"), nullable=True) 
-
+    timestamp = Column(DateTime, default=datetime.datetime.utcnow) 
     colis = relationship("Colis", back_populates="historiques")
+class Client (Base) :
+    __tablename__ = "client"
+    id = Column(Integer,primary_key=True )
+    name= Column(String )
+    email= Column(String ,unique=True )
+    password= Column(String  ,nullable=True  )
+    telephone= Column(String ,nullable=True  )

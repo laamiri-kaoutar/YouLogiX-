@@ -8,7 +8,6 @@ class UserRepository:
 
     def get_by_email(self, email: str) -> User | None:
         return self.db.query(User).filter(User.email == email).first()
-
     def create(self, user_data: dict) -> User:
         db_user = User(**user_data)
         self.db.add(db_user)
@@ -18,3 +17,4 @@ class UserRepository:
 
     def get_by_id(self, id: int) -> User | None:
         return self.db.query(User).filter(User.id == id).first()
+    # def update

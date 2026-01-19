@@ -9,5 +9,9 @@ class LivreurCreate(BaseModel) :
 class LivreurAddZone(BaseModel) :
     zone_name : str 
     model_config = ConfigDict(from_attributes=True)
+class LivreurUpdate(BaseModel) :
+    vehicule : Optional[str] = None
+    zone_name : Optional[str] = None
+
 
 

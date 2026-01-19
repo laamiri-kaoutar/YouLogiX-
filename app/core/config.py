@@ -11,8 +11,8 @@ class Settings(BaseSettings):
     POSTGRES_PORT: int
     POSTGRES_DB: str
     DATABASE_URL: str
-
-    
+    email_address: str
+    email_password: str
     # ---  Security Settings ---
     SECRET_KEY: str
     ALGORITHM: str = "HS256"

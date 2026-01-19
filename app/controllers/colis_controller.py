@@ -1,5 +1,5 @@
 from app.services.colis_service import ColisService
-from app.schemas.colis_schemas import ColisCreate
+from app.schemas.colis_schemas import ColisCreate , ColisBase
 from app.models.colis_models import Colis
 from app.schemas.colis_schemas import ColisUpdateStatus , ColisFilter
 
@@ -8,10 +8,11 @@ class ColisController:
     def __init__(self):
         self.service = ColisService()
 
-    def create(self, colis_data: ColisCreate) -> Colis:
+    def create(self, colis_data: ColisBase) :
 
-        colis_obj = Colis(**colis_data.model_dump())
-
+        # return colis_data
+        colis_obj = Colis(**colis_data.model_dump(mode="orm"))
+        # return colis_obj
         created_colis = self.service.create_colis(colis_obj)
         
         return created_colis
@@ -42,4 +43,4 @@ class ColisController:
     def get_for_destinataire(self, id_destinataire: int):
         return self.service.get_by_destinataire(id_destinataire)
     def get_colis_without_livreur(self) :
-        self.service.get_colis_without_livreur()
+        return self.service.get_colis_without_livreur()

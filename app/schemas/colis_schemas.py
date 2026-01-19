@@ -34,7 +34,7 @@ class ColisBase(BaseModel):
     id_zone: int
     
     id_client: Optional[int] = None 
-    id_livreur: Optional[int] = None
+    
 
 
 
@@ -42,7 +42,7 @@ class ColisBase(BaseModel):
 # 3. Input Schema
 class ColisCreate(ColisBase):
     pass
-
+ 
 
 # 4. Filter Schema
 class ColisFilter(BaseModel):
@@ -73,4 +73,6 @@ class ColisResponse(ColisSimpleResponse):
 class ColisUpdateStatus(BaseModel):
     statut: StatutColis
     id_livreur: Optional[int] = None
-
+class ColisLivreur(BaseModel) :
+    id : int
+    email : str
